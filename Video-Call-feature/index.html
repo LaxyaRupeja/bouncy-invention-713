@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video-Chat</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  </head>
+  <body>
+    <h1>Video-Chat-App</h1>
+    <div>
+      <form action="./room.html">
+        <input type="text" placeholder="name" id="name" name="name" />
+        <input type="number" name="room" id="roomId" placeholder="room" />
+        <input type="submit" />
+      </form>
+    </div>
+    <script>
+      const socket = io("http://localhost:3000/", {
+        transports: ["websocket"],
+      });
+   
+      let form = document.querySelector("form");
+    </script>
+  </body>
+</html>
