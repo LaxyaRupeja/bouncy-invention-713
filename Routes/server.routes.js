@@ -6,7 +6,7 @@
 // Imports are here
 const express = require('express');
 const router = express.Router();
-// Code from here
+// Code from heres
 router.get("/", (req, res) => {
     res.send(`<h1 style="text-align:center; font-size:50px;">Chatify - Home Route</h1>`)
 })
