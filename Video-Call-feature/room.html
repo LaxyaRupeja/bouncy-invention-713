@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebRTC Video Call</title>
+    <style>
+      #localVideo,
+      #remoteVideo {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        border: 1px solid gray;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>WebRTC Video Call</h1>
+    <video id="localVideo" autoplay muted></video>
+    <button onclick="createOffer()">LICK</button>
+
+    <video id="remoteVideo" autoplay></video>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+    <script>
+      const socket = io();
+      navigator.mediaDevices
+        .getUserMedia({ video: true, audio: true })
+        .then((stream) => {
+          const localVideo = document.getElementById("localVideo");
+          localVideo.srcObject = stream;
+        })
+        .catch((error) => {
+          console.error("Error accessing media devices:", error);
+        });
+
+      // Declare peerConnection variable
+      let peerConnection;
+
+      // Listen for signaling messages from the server
+      socket.on("signalingMessage", (message) => {
+        if (message.type === "offer") {
+          handleOffer(message.offer);
+        } else if (message.type === "answer") {
+          handleAnswer(message.answer);
+        } else if (message.type === "candidate") {
+          handleCandidate(message.candidate);
+        }
+      });
+
+      // Create and send an offer to the other peer
+      function createOffer() {
+        // Create the peer connection
+        createPeerConnection();
+
+        // Add local stream to the peer connection
+        const localStream = document.getElementById("localVideo").srcObject;
+        localStream.getTracks().forEach((track) => {
+          peerConnection.addTrack(track, localStream);
+        });
+
+        // Create and send the offer
+        peerConnection
+          .createOffer()
+          .then((offer) => {
+            peerConnection.setLocalDescription(offer);
+            socket.emit("signalingMessage", { type: "offer", offer });
+            console.log("yoo");
+          })
+          .catch((error) => {
+            console.error("Error creating offer:", error);
+          });
+      }
+
+      // Handle the received offer
+      function handleOffer(offer) {
+        // Create the peer connection
+        createPeerConnection();
+
+        // Set the remote description
+        peerConnection.setRemoteDescription(offer);
+
+        // Add local stream to the peer connection
+        const localStream = document.getElementById("localVideo").srcObject;
+        localStream.getTracks().forEach((track) => {
+          peerConnection.addTrack(track, localStream);
+        });
+
+        // Create and send the answer
+        peerConnection
+          .createAnswer()
+          .then((answer) => {
+            peerConnection.setLocalDescription(answer);
+            socket.emit("signalingMessage", { type: "answer", answer });
+          })
+          .catch((error) => {
+            console.error("Error creating answer:", error);
+          });
+      }
+
+      // Handle the received answer
+      function handleAnswer(answer) {
+        peerConnection.setRemoteDescription(answer);
+      }
+
+      // Handle the received ICE candidate
+      function handleCandidate(candidate) {
+        peerConnection.addIceCandidate(candidate);
+      }
+
+      // Create the peer connection
+      function createPeerConnection() {
+        peerConnection = new RTCPeerConnection({
+          iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
+        });
+
+        // Listen for ICE candidates and send them to the other peer
+        peerConnection.onicecandidate = (event) => {
+          if (event.candidate) {
+            socket.emit("signalingMessage", {
+              type: "candidate",
+              candidate: event.candidate,
+            });
+          }
+        };
+
+        // Display remote video stream when received
+        peerConnection.ontrack = (event) => {
+          const remoteVideo = document.getElementById("remoteVideo");
+          if (!remoteVideo.srcObject) {
+            remoteVideo.srcObject = event.streams[0];
+          }
+        };
+      }
+    </script>
+  </body>
+</html>
