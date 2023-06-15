@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>testing</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <h1>Available group to join</h1>
+      <div id="groupWrapper"></div>
+    </div>
+    <script>
+      //   console.log(io);
+      const socket = io("ws://localhost:8080/", {
+        transports: ["websocket"],
+      });
+
+      function displayData() {
+        fetch("http://localhost:8080/group")
+          .then((res) => res.json())
+          .then((data) => {
+            appendData(data);
+          });
+      }
+      displayData();
+      function appendData(data) {
+        data.forEach((el) => {
+          document.getElementById(
+            "groupWrapper"
+          ).innerHTML += `<a href="room.html?room=${el._id}">${el.name}</a>`;
+        });
+      }
+    </script>
+  </body>
+</html>

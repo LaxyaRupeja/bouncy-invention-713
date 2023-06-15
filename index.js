@@ -8,11 +8,16 @@
 // Imports
 const express = require('express');
 const connection = require('./Configs/db');
+const http = require('http');
 const { router } = require('./Routes/server.routes');
-require('dotenv').config();
-// Code
+const { initializeSocket } = require('./Socket/socket');
+const cors = require('cors');
 const app = express();
-app.use("/", router)
+const server = http.createServer(app);
 
+initializeSocket(server);
+require('dotenv').config();
+app.use(cors());
 app.use(express.json());
-app.listen(process.env.PORT || 8080, connection());
+app.use("/", router)
+server.listen(process.env.PORT || 8080, connection());
