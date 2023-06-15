@@ -24,5 +24,5 @@ const groupSchema = mongoose.Schema({
 //     return time24;
 //   }
   
-const GroupModel = mongoose.model('groups', groupSchema)
-module.exports = GroupModel
+const GroupModel = mongoose.model('group', groupSchema)
+module.exports = {GroupModel};
