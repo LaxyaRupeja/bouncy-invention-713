@@ -22,6 +22,7 @@
         socket.emit("message", {
           msg: document.getElementById("msg").value,
           roomID: roomID,
+          user:userID
         });
 
         document.getElementById("msg").value = "";
