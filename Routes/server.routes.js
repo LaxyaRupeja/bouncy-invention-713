@@ -6,7 +6,7 @@
 // Imports are here
 const express = require('express');
 const ChatModel = require('../Models/chat.model');
-const GroupModel = require('../Models/group.model');
+const { GroupModel } = require('../Models/group.model');
 // Code from here
 const router = express.Router();
 router.get("/", (req, res) => {
@@ -14,6 +14,7 @@ router.get("/", (req, res) => {
 })
 router.get("/group", async (req, res) => {
     try {
+        console.log(await GroupModel.find())
         res.json(await GroupModel.find());
     }
     catch (err) {

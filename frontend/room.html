@@ -9,12 +9,15 @@
   <body>
     <h1>Chat-Room</h1>
     <input id="msg" type="text" placeholder="Type here..." />
+    <input id="userId" type="text" placeholder="Type here IDD..." />
     <button onclick="sendMessage()">SEND</button>
     <div id="chatWrapper"></div>
     <script>
       const socket = io("ws://localhost:8080/", {
         transports: ["websocket"],
       });
+      // const userID = (Math.random() * 1000).toFixed(0);
+      // console.log(userID);
       const urlParams = new URLSearchParams(window.location.search);
       const roomID = urlParams.get("room");
       socket.emit("joinRoom", { roomID: roomID });
@@ -22,15 +25,20 @@
         socket.emit("message", {
           msg: document.getElementById("msg").value,
           roomID: roomID,
-          user:userID
+          user: document.getElementById("userId").value,
         });
 
         document.getElementById("msg").value = "";
+        document.getElementById("userId").value = "";
       }
       socket.on("msgData", (data) => {
-        document.getElementById(
-          "chatWrapper"
-        ).innerHTML += `<p>${data.msg}</p>`;
+        console.log(data);
+        document.getElementById("chatWrapper").innerHTML = null;
+        data.data.forEach((el) => {
+          document.getElementById(
+            "chatWrapper"
+          ).innerHTML += `<div>User - ${el.user}<p>Msg - ${el.text}</p> Time - ${el.Date}</div>`;
+        });
       });
     </script>
   </body>
