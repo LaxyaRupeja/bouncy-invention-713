@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
-//const express = require('express');
-//const ChatModel = require('../Models/chat.model');
+
 const { GroupModel } = require('../Models/group.model');
 // Code from here
-//const router = express.Router();
+
 const socketIO = require('socket.io');
 
 function getCurrentTime24() {
@@ -26,17 +25,14 @@ function initializeSocket(server) {
         socket.on("joinRoom", async (msg) => {
             // console.log(msg)
             socket.join(msg.roomID);
-            //find by id group
-            // { data:group.message }
-            // io.to(data.roomID).emit('msgData', MessageData);
+            
             const group = await GroupModel.findOne({ _id: msg.roomID });
             // console.log(group);
             io.to(msg.roomID).emit('msgData', { data: group.message });
         })
         socket.on("message", async (data) => {
             console.log(data);
-            // save in database
-            // io.to(data.roomID).emit('chatMessage', data);
+            
             const group = await GroupModel.findOne({ _id: data.roomID });
 
             let tim = getCurrentTime24();
