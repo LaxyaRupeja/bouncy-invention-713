@@ -1,1 +1,4 @@
-// You can write model for user model here
+const mongoose = require('mongoose');
+const userSchema = mongoose.Schema({
+    name:String
+})
