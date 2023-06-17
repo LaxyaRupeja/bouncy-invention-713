@@ -4,15 +4,96 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>testing</title>
+    <link rel="stylesheet" href="styles/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
   </head>
   <body>
-    <div>
-      <h1>Available group to join</h1>
-      <div id="groupWrapper"></div>
-    </div>
+    <nav>
+      <img
+        src="WhatsApp_Image_2023-06-13_at_9.06.20_PM-removebg-preview.png"
+        alt=""
+      />
+      <p>Laxya<i class="fa-solid fa-user"></i></p>
+    </nav>
+    <main>
+      <div>
+        <div id="below-nav">
+          <h1><i class="fa-solid fa-users"></i> Available groups</h1>
+          <h3>Create Group<i class="fa-solid fa-plus"></i></h3>
+        </div>
+        <div id="groupWrapper">
+          <div class="groupChild">
+            <h2>Group - 1</h2>
+            <div>
+              <p class="members"><i class="fa-solid fa-users"></i> 3</p>
+              <p class="join">
+                <a href="">Join</a
+                ><i class="fa-solid fa-arrow-right-to-bracket"></i>
+              </p>
+            </div>
+          </div>
+          <div class="groupChild">
+            <h2>Group - 1</h2>
+            <div>
+              <p class="members"><i class="fa-solid fa-users"></i> 3</p>
+              <p class="join">
+                <a href="">Join</a
+                ><i class="fa-solid fa-arrow-right-to-bracket"></i>
+              </p>
+            </div>
+          </div>
+          <div class="groupChild">
+            <h2>Group - 1</h2>
+            <div>
+              <p class="members"><i class="fa-solid fa-users"></i> 3</p>
+              <p class="join">
+                <a href="">Join</a
+                ><i class="fa-solid fa-arrow-right-to-bracket"></i>
+              </p>
+            </div>
+          </div>
+          <div class="groupChild">
+            <h2>Group - 1</h2>
+            <div>
+              <p class="members"><i class="fa-solid fa-users"></i> 3</p>
+              <p class="join">
+                <a href="">Join</a
+                ><i class="fa-solid fa-arrow-right-to-bracket"></i>
+              </p>
+            </div>
+          </div>
+          <div class="groupChild">
+            <h2>Group - 1</h2>
+            <div>
+              <p class="members"><i class="fa-solid fa-users"></i> 3</p>
+              <p class="join">
+                <a href="">Join</a
+                ><i class="fa-solid fa-arrow-right-to-bracket"></i>
+              </p>
+            </div>
+          </div>
+          <div class="groupChild">
+            <h2>Group - 1</h2>
+            <div>
+              <p class="members"><i class="fa-solid fa-users"></i> 3</p>
+              <p class="join">
+                <a href="">Join</a
+                ><i class="fa-solid fa-arrow-right-to-bracket"></i>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
     <script>
-      //   console.log(io);
+      console.log(io);
       const socket = io("ws://localhost:8080/", {
         transports: ["websocket"],
       });
@@ -25,7 +106,7 @@
             appendData(data);
           });
       }
-      displayData();
+      // displayData();
       function appendData(data) {
         data.forEach((el) => {
           document.getElementById(

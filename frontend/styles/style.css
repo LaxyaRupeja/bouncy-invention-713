@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background-color: #111b21;
+
+}
+nav{
+    background-color: #202c33;
+    display: flex;
+    height: 80px;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding:0 30px;
+
+}
+nav img{
+    width: 20%;
+    padding: 20px;
+    padding-left: 0;
+}
+nav p{
+    font-size: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.members{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+#groupWrapper{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-auto-rows: 1fr;
+    gap: 20px;
+    margin-top: 20px;
+
+}
+main{
+    width: 95%;
+    color: white;
+    margin: auto;
+    margin-top: 20px;
+}
+main > div > h1{
+    /* text-align: center; */
+}
+.groupChild > h2{
+    font-size: 30px;
+}
+.groupChild{
+    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* border: 1px solid white; */
+    padding: 30px;
+    border-radius: 14px;
+    background-color: #202c33;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.groupChild > div{
+    display: flex;
+    justify-content: space-between;
+}
+.join{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    border: 2px solid white ;
+    padding: 10px;
+    border-radius: 14px;
+
+}
+.join a{
+    color: white;
+    text-decoration: none;
+}
+#below-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#below-nav h3{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #202c33;
+    padding: 10px;
+    border-radius: 14px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
