@@ -5,7 +5,10 @@ const groupSchema = mongoose.Schema({
     message: [
         {
             text: String,
-            user: String,
+            user: {
+                type: mongoose.Types.ObjectId,
+                ref: "user",
+            },
             Date: String
         }
     ]

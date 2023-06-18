@@ -1,19 +1,18 @@
-<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>whatsApp</title>
-    <link rel="stylesheet" href="./style.css" />
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-   
-  </head>
-  <body>
-    <div class="container">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>whatsApp</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+</head>
+
+<body>
+  <!-- <div class="container">
       <div class="leftside">
         <div class="header">
           <div class="userimg" id="myAvtar">
@@ -25,50 +24,109 @@
             <li><ion-icon name="ellipsis-vertical"></ion-icon></li>
           </ul>
         </div>
-       
-      <div class="rightside">
-        <div class="header">
-          <div class="imgtext">
-            <div class="userimg" id="userAvtar">
-              <img
-                src="https://st4.depositphotos.com/1854227/28973/i/600/depositphotos_289731200-stock-photo-a-young-female-student-sitting.jpg"
-                alt=""
-                class="cover"
-              />
-            </div>
-            <h4 class="name">Alka <br /><span>online</span></h4>
-          </div>
-
-          <ul class="nav-icon" id="video">
-             <button id="video"  ><li><ion-icon name="videocam"></ion-icon></li></button>
-            <button id="exit" ><li><ion-icon name="log-out-outline"></ion-icon></li></button>
-          </ul>
+        -->
+  <div class="rightside">
+    <div class="header">
+      <div class="imgtext">
+        <div class="userimg" id="userAvtar">
+          <img
+            src="https://st4.depositphotos.com/1854227/28973/i/600/depositphotos_289731200-stock-photo-a-young-female-student-sitting.jpg"
+            alt="" class="cover" />
         </div>
+        <h4 class="name" id="groupName"></h4>
+      </div>
 
-        <!-- chat shown here -->
-        <div class="chat-box">
-
-
-            <div class="other"></div>
-
-
-            <div class="user"></div> 
-
-
-
-
-
-        </div>
-
-        <!-- chatpad type message here -->
-
-        <div class="chatinput">
-          <ion-icon name="happy-outline"></ion-icon>
-          <ion-icon name="attach-outline"></ion-icon>
-
-          <input type="text" placeholder="Type a message" class="chatInp" />
-          <button><ion-icon name="send" class="sendChat"></ion-icon></button>
+      <ul class="nav-icon" id="video">
+        <button id="video">
+          <li><ion-icon name="videocam"></ion-icon></li>
+        </button>
+        <button id="exit">
+          <li><ion-icon name="log-out-outline"></ion-icon></li>
+        </button>
+      </ul>
+    </div>
+    <!-- chat shown here -->
+    <div class="chat-box">
+      <div class="chattings" id="chatting">
+        <div id="messageContainer">
         </div>
       </div>
-  </body>
+
+      <div class="chatinput">
+        <ion-icon name="happy-outline"></ion-icon>
+        <ion-icon name="attach-outline"></ion-icon>
+
+        <input type="text" placeholder="Type a message" class="chatInp" id="msg" />
+        <button onclick="sendMessage()"><ion-icon name="send" class="sendChat"></ion-icon></button>
+      </div>
+    </div>
+</body>
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const roomID = urlParams.get("room");
+  let token = localStorage.getItem("LoggedID");
+  fetch(`http://localhost:8080/room?id=${roomID}`)
+  .then((res)=>res.json())
+  .then((data)=>{
+    document.getElementById("groupName").innerText = data.name;
+  })
+  fetch('http://localhost:8080/user', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': token
+    }
+  }).then(response => response.json())
+    .then(data => {
+      localStorage.setItem("userID", data.id);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  let userID = localStorage.getItem("userID");
+  const messageContainer = document.getElementById('chatting');
+  const mainMsgCont = document.getElementById("messageContainer");
+  const appendMessage = (message, user, position, time) => {
+    let msgDiv = document.createElement("div");
+    msgDiv.setAttribute("class", `message ${position}`);
+    msgDiv.innerHTML = `
+                <span>${user}</span>
+                <i class="fa-solid fa-heart"></i>
+                <p>${message}</p>
+                <p class="time">${time}</p>
+              `;
+    mainMsgCont.append(msgDiv);
+    mainMsgCont.scrollTop = mainMsgCont.scrollHeight;
+  }
+  const socket = io("ws://localhost:8080/", {
+    transports: ["websocket"],
+  });
+
+  socket.emit("joinRoom", { roomID: roomID });
+  function sendMessage() {
+    socket.emit("message", {
+      msg: document.getElementById("msg").value,
+      roomID: roomID,
+      user: userID,
+    });
+
+    document.getElementById("msg").value = "";
+    // document.getElementById("userId").value = "";
+  }
+  socket.on("msgData", (data) => {
+    console.log(data);
+    document.getElementById("messageContainer").innerHTML = null;
+    data.data.forEach((el) => {
+      if (el.user._id == userID) {
+        appendMessage(el.text, el.user.username, "right", el.Date)
+
+      }
+      else {
+        appendMessage(el.text, el.user.username, "left", el.Date)
+      }
+      console.log(el);
+    });
+  });
+</script>
+
 </html>

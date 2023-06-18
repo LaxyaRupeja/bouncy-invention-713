@@ -29,28 +29,25 @@ function initializeSocket(server) {
             //find by id group
             // { data:group.message }
             // io.to(data.roomID).emit('msgData', MessageData);
-            const group = await GroupModel.findOne({ _id: msg.roomID });
-            // console.log(group);
+            const group = await GroupModel.findOne({ _id: msg.roomID }).populate("message.user");
+
+            console.log(group);
             io.to(msg.roomID).emit('msgData', { data: group.message });
         })
         socket.on("message", async (data) => {
             console.log(data);
             // save in database
-            // io.to(data.roomID).emit('chatMessage', data);
-            const group = await GroupModel.findOne({ _id: data.roomID });
-
+            let group = await GroupModel.findOne({ _id: data.roomID }).populate("message.user");
             let tim = getCurrentTime24();
             let ms = {
                 text: data.msg,
                 user: data.user,
                 Date: tim
             }
-            // console.log(group)
             group.message.push(ms);
             await GroupModel.findByIdAndUpdate({ _id: data.roomID }, group);
-            // console.log(group.message);
+            group = await GroupModel.findOne({ _id: data.roomID }).populate("message.user");
             io.to(data.roomID).emit('msgData', { data: group.message });
-
         })
         socket.on('disconnect', () => {
             console.log('A user disconnected');
