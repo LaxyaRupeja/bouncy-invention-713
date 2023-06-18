@@ -79,21 +79,11 @@
               </p>
             </div>
           </div>
-          <div class="groupChild">
-            <h2>Group - 1</h2>
-            <div>
-              <p class="members"><i class="fa-solid fa-users"></i> 3</p>
-              <p class="join">
-                <a href="">Join</a
-                ><i class="fa-solid fa-arrow-right-to-bracket"></i>
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </main>
     <script>
-      console.log(io);
+      // console.log(io);
       const socket = io("ws://localhost:8080/", {
         transports: ["websocket"],
       });
@@ -102,16 +92,24 @@
         fetch("http://localhost:8080/group")
           .then((res) => res.json())
           .then((data) => {
-            // console.log(data);
+            document.getElementById("groupWrapper").innerHTML = "";
             appendData(data);
           });
       }
-      // displayData();
+      displayData();
       function appendData(data) {
         data.forEach((el) => {
-          document.getElementById(
-            "groupWrapper"
-          ).innerHTML += `<a href="room.html?room=${el._id}">${el.name}</a>`;
+          let groupCh = document.createElement("div");
+          groupCh.setAttribute("class", "groupChild");
+          groupCh.innerHTML = `<h2>${el.name}</h2>
+            <div>
+              <p class="members"><i class="fa-solid fa-users"></i> 3</p>
+              <p class="join">
+                <a href="./chatpage.html?room=${el._id}">Join</a
+                ><i class="fa-solid fa-arrow-right-to-bracket"></i>
+              </p>
+            </div>`;
+          document.getElementById("groupWrapper").append(groupCh);
         });
       }
     </script>

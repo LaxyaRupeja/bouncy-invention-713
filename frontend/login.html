@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets\favico\blink-favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="shortcut icon" href="./img/chain.png" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Darumadrop+One&family=Poppins:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="login.css" />
+    <style>
+      .dropdown {
+        color: white;
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown span {
+        color: white;
+        cursor: pointer;
+      }
+
+      .dropdown .dropdown-menu {
+        display: none;
+        color: white;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1;
+        background-color: #2d365c;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        border: 1px solid #ccc;
+        border-top: none;
+      }
+
+      .dropdown .dropdown-menu li a {
+        display: block;
+        color: white;
+        padding: 10px;
+        text-decoration: none;
+      }
+
+      .dropdown .dropdown-menu li a:hover {
+        background-color: #2d365c;
+      }
+
+      .dropdown.open .dropdown-menu {
+        display: block;
+      }
+    </style>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="login.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+      crossorigin="anonymous"
+    />
+    <title>Chatify</title>
+  </head>
+  <body>
+    <div class="loginContainer">
+      <div class="loginWrapper">
+        <div class="container" id="container">
+          <div class="form-container sign-up-container">
+            <form id="signup-form" method="post">
+              <h1 class="h1 createAccount">Create Account</h1>
+              <div class="social-container">
+                <a href="#" class="social"
+                  ><i class="fab fa-google-plus-g"></i
+                ></a>
+              </div>
+
+              <span>or use your email for registration</span>
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                id="name"
+              />
+              <input type="email" name="email" placeholder="Email" id="email" />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                id="password"
+              />
+              <button type="submit" type="submit">Sign Up</button>
+              <a href="#" class="ghost" id="signIn"
+                >Already Registerd? Sign In Here</a
+              >
+            </form>
+          </div>
+          <div class="form-container sign-in-container">
+            <form method="POST" id="signin-form">
+              <h1 id="signIntext">Sign in</h1>
+              <div class="social-container">
+                <a href="login.html" class="social"
+                  ><i class="fab fa-google-plus-g"></i
+                ></a>
+              </div>
+
+              <span>or use your account</span>
+              <input type="username" name="email" placeholder="Username" />
+              <input type="password" name="password" placeholder="Password" />
+              <!-- <a href="#">Forgot your password?</a> -->
+              <button type="submit">Sign In</button>
+              <a href="#" class="ghost" id="signUp">New Here? Sign Up Now</a>
+            </form>
+          </div>
+          <div class="overlay-container">
+            <div class="overlay">
+              <div class="overlay-panel overlay-left">
+                <img
+                  src="../frontend/WhatsApp_Image_2023-06-13_at_9.06.20_PM-removebg-preview.png"
+                  alt=""
+                />
+                <h1>Hello, Friend!</h1>
+                <p>
+                  New User? Create an account and start Chatting with Friends
+                </p>
+              </div>
+              <div class="overlay-panel overlay-right">
+                <img
+                  src="../frontend/WhatsApp_Image_2023-06-13_at_9.06.20_PM-removebg-preview.png"
+                  alt=""
+                />
+                <h1>Welcome Back!</h1>
+
+                <p>
+                  Enter your login credentials and start Chating with Friends
+                </p>
+                <!-- <button class="ghost" id="signUp">Sign Up</button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lowerFooter">
+      &#169; Chatify | All Rights are Reserved&#174; | Terms And Services
+      &#8482;<br />
+      Made With ❤️ By Masai Students
+    </div>
+  </body>
+  <script>
+    const dropdown = document.querySelector(".dropdown");
+    const dropdownMenu = dropdown.querySelector(".dropdown-menu");
+
+    dropdown.addEventListener("click", function () {
+      dropdown.classList.toggle("open");
+    });
+  </script>
+  <script src="rohitlogin.js"></script>
+</html>
