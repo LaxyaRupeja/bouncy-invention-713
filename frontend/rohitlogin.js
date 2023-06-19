@@ -26,11 +26,7 @@ form.addEventListener('submit', function (event) {
     event.preventDefault();
 
     // Validate password
-    console.log(passwordRegex.test(passwordInput.value));
-    if (!passwordRegex.test(passwordInput.value)) {
-        alert('Please enter a password that meets the required criteria.')
-        return;
-    }
+    // console.log(passwordRegex.test(passwordInput.value));
     let data = {
         username: nameInput.value,
         email: emailInput.value,
@@ -39,7 +35,7 @@ form.addEventListener('submit', function (event) {
 
     // Submit form
     console.log(data)
-    fetch("http://localhost:9800/signup", {
+    fetch("http://localhost:8080/signup", {
         method: "post",
         headers: {
             "Content-Type": "application/json"
