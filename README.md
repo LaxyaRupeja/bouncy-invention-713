@@ -5,6 +5,10 @@
 * Laxya Rupeja (Team Lead) - fw25-_261
 * Shreyansh Jain
 * Alka  Trivedi
+## Images 
+![Screenshot 2023-06-19 144336](https://github.com/LaxyaRupeja/bouncy-invention-713/assets/121308243/2dec74b3-2412-48ef-9ad5-12b6cff7c92c)
+![Screenshot 2023-06-19 144309](https://github.com/LaxyaRupeja/bouncy-invention-713/assets/121308243/b506157d-e6bf-4c8c-8598-7850dea0903f)
+![Screenshot 2023-06-19 144251](https://github.com/LaxyaRupeja/bouncy-invention-713/assets/121308243/d796c73c-e565-4576-8d18-5e89c02815c0)
 ## Tech Stack
 * HTML
 * CSS
