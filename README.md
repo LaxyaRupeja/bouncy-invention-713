@@ -21,7 +21,7 @@
 * Login/SignUp
 * Real Time Chat feature
 * Group Chats
-* Create Group/Join existing gorup
+* Create Group/Join existing group
 * Chat Saved in Database
 * Authorization
 ## Deployed Link
