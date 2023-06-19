@@ -25,7 +25,7 @@
 * Chat Saved in Database
 * Authorization
 ## Deployed Link
-Frontend - 
+* Frontend - 
 https://lovely-lily-a2088f.netlify.app/
-Backend - 
-chatify-backend-production.up.railway.app
+* Backend - 
+https://chatify-backend-production.up.railway.app
