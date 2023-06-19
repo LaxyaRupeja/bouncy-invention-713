@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>testing</title>
+    <title>Group - Page</title>
     <link rel="stylesheet" href="styles/style.css" />
     <link
       rel="stylesheet"
@@ -20,13 +20,19 @@
         src="WhatsApp_Image_2023-06-13_at_9.06.20_PM-removebg-preview.png"
         alt=""
       />
-      <p>Laxya<i class="fa-solid fa-user"></i></p>
+      <p>
+        <span id="userName">Loading...</span><i class="fa-solid fa-user"></i>
+        <a href="./login.html"><button id="logoutbtn">Logout</button></a>
+      </p>
     </nav>
     <main>
       <div>
         <div id="below-nav">
           <h1><i class="fa-solid fa-users"></i> Available groups</h1>
-          <h3>Create Group<i class="fa-solid fa-plus"></i></h3>
+          <div id="createGroup">
+            <input type="text" id="groupN" placeholder="Enter Group Name" />
+            <h3 id="createBtn">Create Group<i class="fa-solid fa-plus"></i></h3>
+          </div>
         </div>
         <div id="groupWrapper">
           <div class="groupChild">
@@ -83,7 +89,46 @@
       </div>
     </main>
     <script>
-      // console.log(io);
+      let token = localStorage.getItem("LoggedID");
+      let userID = localStorage.getItem("userID");
+      function addGroup() {
+        fetch("http://localhost:8080/add", {
+          method: "POST",
+          body: JSON.stringify({
+            name: document.getElementById("groupN").value,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res)=>res.json())
+          .then((data) => {
+            document.getElementById("groupN").value = "";
+            location.reload();
+          });
+      }
+      fetch("http://localhost:8080/user", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          localStorage.setItem("userID", data.id);
+          document.getElementById("userName").innerText = data.name;
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      if (!userID && !token) {
+        window.location.href = "./login.html";
+      }
+      document.getElementById("createBtn").addEventListener("click", () => {
+        addGroup();
+      });
       const socket = io("ws://localhost:8080/", {
         transports: ["websocket"],
       });
