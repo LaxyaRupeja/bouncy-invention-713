@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Group - Page</title>
+    <link rel="stylesheet" href="styles/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  </head>
+  <body>
+    <nav>
+      <img
+        src="WhatsApp_Image_2023-06-13_at_9.06.20_PM-removebg-preview.png"
+        alt=""
+      />
+      <p>
+        <span id="userName">Loading...</span><i class="fa-solid fa-user"></i>
+        <a href="./login.html"><button id="logoutbtn">Logout</button></a>
+      </p>
+    </nav>
+    <main>
+      <div>
+        <div id="below-nav">
+          <h1><i class="fa-solid fa-users"></i> Available groups</h1>
+          <div id="createGroup">
+            <input type="text" id="groupN" placeholder="Enter Group Name" />
+            <h3 id="createBtn">Create Group<i class="fa-solid fa-plus"></i></h3>
+          </div>
+        </div>
+        <div id="groupWrapper">
+          <h1>Loading...</h1>
+        </div>
+      </div>
+    </main>
+    <script>
+      let token = localStorage.getItem("LoggedID");
+      let userID = localStorage.getItem("userID");
+      if (!token) {
+        location.href = "login.html";
+      }
+      function addGroup() {
+        fetch("https://picturesque-sky-clock.glitch.me/add", {
+          method: "POST",
+          body: JSON.stringify({
+            name: document.getElementById("groupN").value,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            document.getElementById("groupN").value = "";
+            location.reload();
+          });
+      }
+      fetch("https://picturesque-sky-clock.glitch.me/user", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          localStorage.setItem("userID", data.id);
+          document.getElementById("userName").innerText = data.name;
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      if (!userID && !token) {
+        window.location.href = "./login.html";
+      }
+      document.getElementById("createBtn").addEventListener("click", () => {
+        addGroup();
+      });
+      const socket = io("wss://picturesque-sky-clock.glitch.me/", {
+        transports: ["websocket"],
+      });
+
+      function displayData() {
+        fetch("https://picturesque-sky-clock.glitch.me/group")
+          .then((res) => res.json())
+          .then((data) => {
+            document.getElementById("groupWrapper").innerHTML = "";
+            appendData(data);
+          });
+      }
+      displayData();
+      function appendData(data) {
+        data.forEach((el) => {
+          let groupCh = document.createElement("div");
+          groupCh.setAttribute("class", "groupChild");
+          groupCh.innerHTML = `<h2>${el.name}</h2>
+            <div>
+              <p class="members"><i class="fa-solid fa-users"></i> 3</p>
+              <p class="join">
+                <a href="./chatpage.html?room=${el._id}">Join</a
+                ><i class="fa-solid fa-arrow-right-to-bracket"></i>
+              </p>
+            </div>`;
+          document.getElementById("groupWrapper").append(groupCh);
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -13,7 +13,7 @@
     <button onclick="sendMessage()">SEND</button>
     <div id="chatWrapper"></div>
     <script>
-      const socket = io("ws://localhost:8080/", {
+      const socket = io("wss://picturesque-sky-clock.glitch.me/", {
         transports: ["websocket"],
       });
       // const userID = (Math.random() * 1000).toFixed(0);

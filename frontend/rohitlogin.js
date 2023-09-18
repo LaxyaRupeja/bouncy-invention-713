@@ -35,7 +35,7 @@ form.addEventListener('submit', function (event) {
 
     // Submit form
     console.log(data)
-    fetch("http://localhost:8080/signup", {
+    fetch("https://picturesque-sky-clock.glitch.me/signup", {
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -74,7 +74,7 @@ signInform.addEventListener("submit", (e) => {
 })
 function fetchLogin(data) {
 
-    fetch("http://localhost:8080/login", {
+    fetch("https://picturesque-sky-clock.glitch.me/login", {
         method: "post",
         headers: {
             "Content-Type": "application/json"

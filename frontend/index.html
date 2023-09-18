@@ -2,161 +2,141 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Group - Page</title>
-    <link rel="stylesheet" href="styles/style.css" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
     />
-    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <title>Chatify - Home</title>
+    <style>
+      body {
+        font-family: "Montserrat", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .navbar {
+        background-color: #202c33;
+        color: #ffffff;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        max-width: 180px;
+        height: auto;
+      }
+
+      .hero {
+        background-color: #111b21;
+        color: #ffffff;
+        padding: 100px 20px;
+        text-align: center;
+      }
+
+      ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        font-size: 1.2rem;
+      }
+      h1 {
+        font-size: 4rem;
+        font-weight: bolder;
+      }
+      p {
+        font-size: 1.4rem;
+      }
+      .content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .group-link {
+        display: inline-block;
+        padding: 15px 30px;
+        text-decoration: none;
+        color: white;
+        background-color: #202c33;
+        border-radius: 5px;
+        font-size: 20px;
+        transition: background-color 0.3s ease-in-out;
+        margin-top: 20px;
+      }
+
+      .group-link:hover {
+        background-color: #005bb5;
+      }
+      .spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #ccc;
+        border-radius: 50%;
+        border-top-color: #333;
+        animation: spin 0.6s infinite linear;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
   </head>
   <body>
-    <nav>
+    <nav class="navbar">
       <img
         src="WhatsApp_Image_2023-06-13_at_9.06.20_PM-removebg-preview.png"
-        alt=""
+        alt="Chatify Logo"
+        class="logo"
       />
-      <p>
-        <span id="userName">Loading...</span><i class="fa-solid fa-user"></i>
-        <a href="./login.html"><button id="logoutbtn">Logout</button></a>
-      </p>
     </nav>
-    <main>
-      <div>
-        <div id="below-nav">
-          <h1><i class="fa-solid fa-users"></i> Available groups</h1>
-          <div id="createGroup">
-            <input type="text" id="groupN" placeholder="Enter Group Name" />
-            <h3 id="createBtn">Create Group<i class="fa-solid fa-plus"></i></h3>
-          </div>
-        </div>
-        <div id="groupWrapper">
-          <div class="groupChild">
-            <h2>Group - 1</h2>
-            <div>
-              <p class="members"><i class="fa-solid fa-users"></i> 3</p>
-              <p class="join">
-                <a href="">Join</a
-                ><i class="fa-solid fa-arrow-right-to-bracket"></i>
-              </p>
-            </div>
-          </div>
-          <div class="groupChild">
-            <h2>Group - 1</h2>
-            <div>
-              <p class="members"><i class="fa-solid fa-users"></i> 3</p>
-              <p class="join">
-                <a href="">Join</a
-                ><i class="fa-solid fa-arrow-right-to-bracket"></i>
-              </p>
-            </div>
-          </div>
-          <div class="groupChild">
-            <h2>Group - 1</h2>
-            <div>
-              <p class="members"><i class="fa-solid fa-users"></i> 3</p>
-              <p class="join">
-                <a href="">Join</a
-                ><i class="fa-solid fa-arrow-right-to-bracket"></i>
-              </p>
-            </div>
-          </div>
-          <div class="groupChild">
-            <h2>Group - 1</h2>
-            <div>
-              <p class="members"><i class="fa-solid fa-users"></i> 3</p>
-              <p class="join">
-                <a href="">Join</a
-                ><i class="fa-solid fa-arrow-right-to-bracket"></i>
-              </p>
-            </div>
-          </div>
-          <div class="groupChild">
-            <h2>Group - 1</h2>
-            <div>
-              <p class="members"><i class="fa-solid fa-users"></i> 3</p>
-              <p class="join">
-                <a href="">Join</a
-                ><i class="fa-solid fa-arrow-right-to-bracket"></i>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-    <script>
-      let token = localStorage.getItem("LoggedID");
-      let userID = localStorage.getItem("userID");
-      function addGroup() {
-        fetch("http://localhost:8080/add", {
-          method: "POST",
-          body: JSON.stringify({
-            name: document.getElementById("groupN").value,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((res)=>res.json())
-          .then((data) => {
-            document.getElementById("groupN").value = "";
-            location.reload();
-          });
-      }
-      fetch("http://localhost:8080/user", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          localStorage.setItem("userID", data.id);
-          document.getElementById("userName").innerText = data.name;
-          console.log(data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-      if (!userID && !token) {
-        window.location.href = "./login.html";
-      }
-      document.getElementById("createBtn").addEventListener("click", () => {
-        addGroup();
-      });
-      const socket = io("ws://localhost:8080/", {
-        transports: ["websocket"],
-      });
 
-      function displayData() {
-        fetch("http://localhost:8080/group")
-          .then((res) => res.json())
+    <section class="hero">
+      <div class="content">
+        <h1>Welcome to Chatify!</h1>
+        <p>
+          Chatify is a real-time group chat application that allows you to
+          connect and collaborate instantly with friends, colleagues, or anyone
+          you wish. Experience seamless communication in a dynamic and
+          interactive group setting.
+        </p>
+        <a id="status" href="group.html" class="group-link"
+          >Loading...(Starting Backend)<span class="spinner"></span
+        ></a>
+      </div>
+    </section>
+    <script>
+      const statusElement = document.getElementById("status");
+
+      function displayDone() {
+        statusElement.innerHTML = "GO TO GROUP PAGE";
+        statusElement.querySelector(".spinner").remove();
+      }
+
+      function fetchData() {
+        const url = "https://picturesque-sky-clock.glitch.me/group";
+
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
           .then((data) => {
-            document.getElementById("groupWrapper").innerHTML = "";
-            appendData(data);
-          });
+            console.log("Data received:", data);
+            displayDone(); // Update the UI to show "Done"
+          })
+          .catch((error) => console.error("Error:", error));
       }
-      displayData();
-      function appendData(data) {
-        data.forEach((el) => {
-          let groupCh = document.createElement("div");
-          groupCh.setAttribute("class", "groupChild");
-          groupCh.innerHTML = `<h2>${el.name}</h2>
-            <div>
-              <p class="members"><i class="fa-solid fa-users"></i> 3</p>
-              <p class="join">
-                <a href="./chatpage.html?room=${el._id}">Join</a
-                ><i class="fa-solid fa-arrow-right-to-bracket"></i>
-              </p>
-            </div>`;
-          document.getElementById("groupWrapper").append(groupCh);
-        });
-      }
+      fetchData();
     </script>
   </body>
 </html>
