@@ -30,7 +30,8 @@
       <div class="imgtext">
         <div class="userimg" id="userAvtar">
           <img
-            src="https://st4.depositphotos.com/1854227/28973/i/600/depositphotos_289731200-stock-photo-a-young-female-student-sitting.jpg"
+            src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+
             alt="" class="cover" />
         </div>
         <h4 class="name" id="groupName"></h4>
@@ -56,8 +57,8 @@
         <ion-icon name="happy-outline"></ion-icon>
         <ion-icon name="attach-outline"></ion-icon>
 
-        <input type="text" placeholder="Type a message" class="chatInp" id="msg" />
-        <button onclick="sendMessage()"><ion-icon name="send" class="sendChat"></ion-icon></button>
+        <input type="text" placeholder="Type a message" class="chatInp" id="msg" oninput="changeButtonColor()" onkeyup="handleKeyPress(event)"/>
+        <button class="sendMessageButton" onclick="sendMessage()"><ion-icon name="send" id="sendMessageBtn" class="sendChat"></ion-icon></button>
       </div>
     </div>
 </body>
@@ -65,12 +66,12 @@
   const urlParams = new URLSearchParams(window.location.search);
   const roomID = urlParams.get("room");
   let token = localStorage.getItem("LoggedID");
-  fetch(`http://localhost:8080/room?id=${roomID}`)
+  fetch(`https://picturesque-sky-clock.glitch.me/room?id=${roomID}`)
   .then((res)=>res.json())
   .then((data)=>{
     document.getElementById("groupName").innerText = data.name;
   })
-  fetch('http://localhost:8080/user', {
+  fetch('https://picturesque-sky-clock.glitch.me/user', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -98,7 +99,7 @@
     mainMsgCont.append(msgDiv);
     mainMsgCont.scrollTop = mainMsgCont.scrollHeight;
   }
-  const socket = io("ws://localhost:8080/", {
+  const socket = io("wss://picturesque-sky-clock.glitch.me/", {
     transports: ["websocket"],
   });
 
@@ -127,6 +128,21 @@
       console.log(el);
     });
   });
+  function changeButtonColor() {
+  const input = document.getElementById('msg');
+  const button = document.getElementById('sendMessageBtn');
+  if (input.value.trim() !== '') {
+    button.style.color = 'white';
+  } else {
+    button.style.color = 'grey';
+  }
+}
+function handleKeyPress(event) {
+  if (event.key === 'Enter' && event.target.value != "") {
+    sendMessage();
+  }
+}
+
 </script>
 
 </html>
