@@ -2,8 +2,9 @@
 ## Project Description
 **The Real-Time Chat Application with Group Feature is a modern and dynamic communication platform that enables users to engage in real-time conversations, both one-on-one and in groups. The application focuses on providing a seamless and user-friendly experience for individuals and teams, facilitating efficient and effective communication.**
 ## Team Member
-* Laxya Rupeja (Team Lead) - fw25-_261
+* Laxya Rupeja
 * Shreyansh Jain
+* Rohit Kumar
 * Alka  Trivedi
 ## Images 
 ![Screenshot 2023-06-19 144336](https://github.com/LaxyaRupeja/bouncy-invention-713/assets/121308243/2dec74b3-2412-48ef-9ad5-12b6cff7c92c)
